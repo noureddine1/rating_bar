@@ -129,7 +129,29 @@ class _RatingBarState extends State<RatingBar> {
       iconData = widget.filledIcon;
       color = widget.filledColor ?? Theme.of(context).primaryColor;
     }
-    return Icon(iconData, color: color, size: widget.size);
+    // return Icon(iconData, color: Colors.white, size: widget.size);
+    return ShaderMask(
+      child: SizedBox(
+        width: widget.size * 1.2,
+        height: widget.size * 1.2,
+        child: Icon(
+          iconData,
+          size: widget.size,
+          color: Colors.white,
+        ),
+      ),
+      shaderCallback: (Rect bounds) {
+        final Rect rect = Rect.fromLTRB(0, 0, widget.size, widget.size);
+        return LinearGradient(
+          colors: <Color>[
+            Color(0xfffda701),
+            Color(0xfffdca10),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ).createShader(rect);
+      },
+    );
   }
 
   Widget buildStar(BuildContext context, int position) {
